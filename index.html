@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astraea — AI Legal Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="letterhead">
+    <div class="brand-logo">
+      <img src="astraea-logo.png" alt="Astraea — Your AI legal companion" class="logo-img">
+    </div>
+    <p class="tagline-sanskrit">न्याय की देवी — your legal companion, in your language</p>
+  </header>
+
+  <nav id="tabs" aria-label="Sections">
+    <button class="tab-btn active" data-tab="analyzer" type="button">
+      <span class="tab-index">01</span> Document Analyzer
+    </button>
+    <button class="tab-btn" data-tab="complaint" type="button">
+      <span class="tab-index">02</span> Complaint Generator
+    </button>
+    <button class="tab-btn" data-tab="compensation" type="button">
+      <span class="tab-index">03</span> Compensation Estimator
+    </button>
+    <button class="tab-btn" data-tab="lawlibrary" type="button">
+      <span class="tab-index">04</span> BNS / BNSS Finder
+    </button>
+  </nav>
+
+  <main>
+
+    <div class="voice-lang-bar">
+      <span class="voice-lang-bar-icon" aria-hidden="true">🎙</span>
+      <span class="voice-lang-bar-label">Voice input language <span class="voice-lang-bar-sub">— used by every microphone button below</span></span>
+      <select id="fieldVoiceLangSelect" title="Choose the language for voice-filled fields">
+        <option value="en-IN">English</option>
+        <option value="hi-IN">हिंदी Hindi</option>
+        <option value="bn-IN">বাংলা Bengali</option>
+        <option value="ta-IN">தமிழ் Tamil</option>
+        <option value="mr-IN">मराठी Marathi</option>
+        <option value="pa-IN">ਪੰਜਾਬੀ Punjabi</option>
+        <option value="te-IN">తెలుగు Telugu</option>
+      </select>
+    </div>
+
+    <div class="case-file">
+
+      <!-- TAB 1: Document Analyzer -->
+      <section id="analyzer" class="tab-content active">
+        <div class="section-head">
+          <h2>Upload or paste your document</h2>
+          <p class="section-sub">Rent agreement, FIR, offer letter, court notice, insurance policy, or loan agreement.</p>
+        </div>
+        <div class="field-with-mic">
+          <textarea id="docText" placeholder="Paste the document text here…"></textarea>
+          <button type="button" class="field-mic-btn textarea-mic" id="docTextMic" title="Speak to fill this field" aria-label="Speak to fill this field">🎤</button>
+        </div>
+        <p class="or-text">— or upload a photo / scan —</p>
+        <label class="file-drop" for="docFile">
+          <input type="file" id="docFile" accept="image/*">
+          <span class="file-drop-label">Choose a file, or drag it here</span>
+          <span class="file-drop-name" id="docFileName"></span>
+        </label>
+        <button id="analyzeBtn" type="button">Analyze Document</button>
+        <div id="analyzeResult" class="result-box" aria-live="polite"></div>
+      </section>
+
+      <!-- TAB 2: Complaint Generator -->
+<section id="complaint" class="tab-content">
+
+  <div class="section-head">
+    <h2>AI Legal Draft Generator</h2>
+    <p class="section-sub">
+      Describe your issue in simple language. Astraea will generate an official legal draft ready for printing.
+    </p>
+  </div>
+
+  <div class="field-with-mic">
+    <textarea
+      id="complaintInput"
+      placeholder="Example:
+My phone was stolen yesterday while travelling in Delhi Metro near Rajiv Chowk station.
+I lost my Aadhaar card and PAN card as well."
+    ></textarea>
+    <button type="button" class="field-mic-btn textarea-mic" id="complaintInputMic" title="Speak to fill this field" aria-label="Speak to fill this field">🎤</button>
+  </div>
+
+  <label class="field-label">Complaint Category</label>
+
+  <select id="complaintType">
+
+    <optgroup label="Police Complaints">
+      <option value="Police FIR">Police FIR</option>
+      <option value="Lost Document FIR">Lost Document Report</option>
+      <option value="Mobile Theft FIR">Mobile Theft</option>
+      <option value="Vehicle Theft FIR">Vehicle Theft</option>
+      <option value="Cyber Crime Complaint">Cyber Crime</option>
+      <option value="Online Fraud Complaint">Online Fraud</option>
+      <option value="UPI Fraud Complaint">UPI Fraud</option>
+      <option value="Physical Assault Complaint">Physical Assault</option>
+      <option value="Domestic Violence Complaint">Domestic Violence</option>
+      <option value="Harassment Complaint">Harassment</option>
+      <option value="Missing Person Report">Missing Person</option>
+    </optgroup>
+
+    <optgroup label="Consumer">
+      <option value="Consumer Complaint">Consumer Complaint</option>
+      <option value="Defective Product Complaint">Defective Product</option>
+      <option value="Refund Complaint">Refund Delay</option>
+      <option value="Service Deficiency Complaint">Poor Service</option>
+      <option value="Ecommerce Complaint">E-Commerce Fraud</option>
+    </optgroup>
+
+    <optgroup label="Employment">
+      <option value="Salary Complaint">Salary Not Paid</option>
+      <option value="Wrongful Termination Complaint">Wrongful Termination</option>
+      <option value="Workplace Harassment Complaint">Workplace Harassment</option>
+    </optgroup>
+
+    <optgroup label="Legal Notices">
+      <option value="Legal Notice">Legal Notice</option>
+      <option value="Money Recovery Notice">Money Recovery Notice</option>
+      <option value="Tenant Notice">Tenant Notice</option>
+      <option value="Landlord Notice">Landlord Notice</option>
+    </optgroup>
+
+    <optgroup label="Compensation / Civil Claims">
+      <option value="Personal Injury Complaint">Personal Injury</option>
+      <option value="Motor Accident Claim">Motor Accident Claim</option>
+      <option value="Medical Negligence Complaint">Medical Negligence</option>
+      <option value="Insurance Claim Complaint">Insurance Claim Delay</option>
+      <option value="Property Damage Complaint">Property Damage</option>
+      <option value="Cheque Bounce Notice">Cheque Bounce (Sec. 138)</option>
+      <option value="Breach of Contract Notice">Breach of Contract</option>
+    </optgroup>
+
+  </select>
+
+  <button id="complaintBtn">
+      Generate Official Draft
+  </button>
+
+  <div id="complaintResult" class="result-box"></div>
+
+  <div id="toCompBridge" class="bridge-prompt">
+    <p>Want to estimate compensation for this?</p>
+    <button id="toCompBtn" type="button">Estimate compensation →</button>
+  </div>
+
+</section>
+
+      <!-- TAB 3: Compensation Estimator -->
+      <section id="compensation" class="tab-content">
+        <div class="section-head">
+          <h2>Estimate compensation</h2>
+          <p class="section-sub">A rough, informational estimate — not legal advice.</p>
+        </div>
+        <label class="field-label" for="compType">Case type</label>
+        <select id="compType">
+          <option value="accident">Accident / Personal Injury</option>
+          <option value="motor_accident">Motor Vehicle Accident (MACT claim)</option>
+          <option value="medical_negligence">Medical Negligence</option>
+          <option value="termination">Wrongful Termination</option>
+          <option value="insurance">Insurance Claim Delay</option>
+          <option value="consumer">Defective Product / Consumer Dispute</option>
+          <option value="property">Property Damage</option>
+          <option value="cheque_bounce">Cheque Bounce (Section 138)</option>
+          <option value="contract_breach">Breach of Contract</option>
+        </select>
+        <label class="field-label" for="compAmount">Relevant amount (₹)</label>
+        <div class="field-with-mic">
+          <input type="number" id="compAmount" placeholder="Salary / medical cost / claim value">
+          <button type="button" class="field-mic-btn input-mic" id="compAmountMic" title="Speak the amount" aria-label="Speak the amount">🎤</button>
+        </div>
+        <label class="field-label" for="compDetails">Briefly describe what happened (optional)</label>
+        <div class="field-with-mic">
+          <textarea id="compDetails" placeholder="Example: Rear-ended at a signal, fractured wrist, missed 6 weeks of work…"></textarea>
+          <button type="button" class="field-mic-btn textarea-mic" id="compDetailsMic" title="Speak to fill this field" aria-label="Speak to fill this field">🎤</button>
+        </div>
+        <button id="compBtn" type="button">Estimate</button>
+        <div id="compResult" class="result-box" aria-live="polite"></div>
+
+        <div id="toComplaintBridge" class="bridge-prompt">
+          <p>Want to generate a complaint or legal notice for this?</p>
+          <button id="toComplaintBtn" type="button">Generate complaint draft →</button>
+        </div>
+      </section>
+
+      <!-- TAB 4: BNS / BNSS Section Finder -->
+      <section id="lawlibrary" class="tab-content">
+        <div class="section-head">
+          <h2>Find relevant BNS / BNSS sections</h2>
+          <p class="section-sub">Describe a crime, legal issue, or right — get the matching sections from the Bharatiya Nyaya Sanhita (BNS) and Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023.</p>
+        </div>
+        <div class="field-with-mic">
+          <textarea id="lawQuery" placeholder="Example: someone stole my phone at knifepoint on the street"></textarea>
+          <button type="button" class="field-mic-btn textarea-mic" id="lawQueryMic" title="Speak to fill this field" aria-label="Speak to fill this field">🎤</button>
+        </div>
+        <button id="lawBtn" type="button">Find Relevant Sections</button>
+        <div id="lawResult" class="result-box law-result" aria-live="polite"></div>
+      </section>
+
+    </div>
+
+    <p class="disclaimer">Astraea gives general information only and is not a substitute for a licensed lawyer. For binding advice, consult a qualified advocate.</p>
+  </main>
+
+  <!-- Floating Conversational Assistant -->
+  <button id="chatFab" class="chat-fab" type="button" aria-expanded="false" aria-controls="chatPanel">
+    <span class="chat-fab-icon" aria-hidden="true">💬</span>
+    <span class="chat-fab-label">Ask Astraea</span>
+  </button>
+
+  <div id="chatPanel" class="chat-panel" aria-hidden="true">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <span class="chat-header-dot" aria-hidden="true"></span>
+        <div>
+          <h3>Astraea</h3>
+          <p>Talk to me in your language</p>
+        </div>
+      </div>
+      <button id="chatCloseBtn" class="chat-icon-btn" type="button" title="Close chat" aria-label="Close chat">✕</button>
+    </div>
+
+    <div class="chat-toolbar">
+      <label class="chat-toolbar-label" for="chatLang">Language</label>
+      <select id="chatLang" title="Choose language">
+        <option value="en-IN">English</option>
+        <option value="hi-IN">हिंदी Hindi</option>
+        <option value="bn-IN">বাংলা Bengali</option>
+        <option value="ta-IN">தமிழ் Tamil</option>
+        <option value="mr-IN">मराठी Marathi</option>
+        <option value="pa-IN">ਪੰਜਾਬੀ Punjabi</option>
+        <option value="te-IN">తెలుగు Telugu</option>
+      </select>
+      <button id="chatMuteBtn" class="chat-icon-btn" type="button" title="Mute voice replies" aria-pressed="false">🔊</button>
+      <button id="chatClearBtn" class="chat-icon-btn" type="button" title="Clear conversation">🗑</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+    <div id="chatListeningRow" class="chat-listening-row" hidden>
+      <span class="mic-dot" aria-hidden="true"></span> Listening…
+    </div>
+
+    <form id="chatForm" class="chat-input-row">
+      <button id="chatMicBtn" type="button" class="chat-icon-btn chat-mic" title="Speak your message" aria-label="Speak your message">🎤</button>
+      <input id="chatInput" type="text" placeholder="Type, or tap the mic to speak…" autocomplete="off">
+      <button id="chatSendBtn" type="submit" class="chat-send-btn">Send</button>
+    </form>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
